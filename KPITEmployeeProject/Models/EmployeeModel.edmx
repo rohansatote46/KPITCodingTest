@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCountryMaster">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblDepartmentMaster">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeptName" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpCode" Type="nvarchar" MaxLength="250" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="DeptId" Type="int" />
+          <Property Name="Age" Type="int" />
+          <Property Name="MaritalStatusId" Type="int" />
+          <Property Name="GenderId" Type="int" />
+          <Property Name="Salary" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Pincode" Type="nvarchar" MaxLength="10" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblGenderMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblMaritalStatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tblStateMaster">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="250" />
+          <Property Name="CountryId" Type="int" />
+        </EntityType>
+        <Association Name="FK_tblEmployee_tblCountryMaster">
+          <End Role="tblCountryMaster" Type="Self.tblCountryMaster" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountryMaster">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblDepartment">
+          <End Role="tblDepartmentMaster" Type="Self.tblDepartmentMaster" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartmentMaster">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblGenderMaster">
+          <End Role="tblGenderMaster" Type="Self.tblGenderMaster" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGenderMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblMaritalStatusMaster">
+          <End Role="tblMaritalStatusMaster" Type="Self.tblMaritalStatusMaster" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMaritalStatusMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="MaritalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblStateMaster">
+          <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStateMaster">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStateMaster_tblCountryMaster">
+          <End Role="tblCountryMaster" Type="Self.tblCountryMaster" Multiplicity="0..1" />
+          <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountryMaster">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblStateMaster">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_SearchEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchText" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="tblCountryMaster" EntityType="Self.tblCountryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDepartmentMaster" EntityType="Self.tblDepartmentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGenderMaster" EntityType="Self.tblGenderMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMaritalStatusMaster" EntityType="Self.tblMaritalStatusMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblEmployee_tblCountryMaster" Association="Self.FK_tblEmployee_tblCountryMaster">
+            <End Role="tblCountryMaster" EntitySet="tblCountryMaster" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblDepartment" Association="Self.FK_tblEmployee_tblDepartment">
+            <End Role="tblDepartmentMaster" EntitySet="tblDepartmentMaster" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblGenderMaster" Association="Self.FK_tblEmployee_tblGenderMaster">
+            <End Role="tblGenderMaster" EntitySet="tblGenderMaster" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblMaritalStatusMaster" Association="Self.FK_tblEmployee_tblMaritalStatusMaster">
+            <End Role="tblMaritalStatusMaster" EntitySet="tblMaritalStatusMaster" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblStateMaster" Association="Self.FK_tblEmployee_tblStateMaster">
+            <End Role="tblStateMaster" EntitySet="tblStateMaster" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStateMaster_tblCountryMaster" Association="Self.FK_tblStateMaster_tblCountryMaster">
+            <End Role="tblCountryMaster" EntitySet="tblCountryMaster" />
+            <End Role="tblStateMaster" EntitySet="tblStateMaster" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCountryMasters" EntityType="Model.tblCountryMaster" />
+          <EntitySet Name="tblDepartmentMasters" EntityType="Model.tblDepartmentMaster" />
+          <EntitySet Name="tblEmployees" EntityType="Model.tblEmployee" />
+          <EntitySet Name="tblGenderMasters" EntityType="Model.tblGenderMaster" />
+          <EntitySet Name="tblMaritalStatusMasters" EntityType="Model.tblMaritalStatusMaster" />
+          <EntitySet Name="tblStateMasters" EntityType="Model.tblStateMaster" />
+          <AssociationSet Name="FK_tblEmployee_tblCountryMaster" Association="Model.FK_tblEmployee_tblCountryMaster">
+            <End Role="tblCountryMaster" EntitySet="tblCountryMasters" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStateMaster_tblCountryMaster" Association="Model.FK_tblStateMaster_tblCountryMaster">
+            <End Role="tblCountryMaster" EntitySet="tblCountryMasters" />
+            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblDepartment" Association="Model.FK_tblEmployee_tblDepartment">
+            <End Role="tblDepartmentMaster" EntitySet="tblDepartmentMasters" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblGenderMaster" Association="Model.FK_tblEmployee_tblGenderMaster">
+            <End Role="tblGenderMaster" EntitySet="tblGenderMasters" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblMaritalStatusMaster" Association="Model.FK_tblEmployee_tblMaritalStatusMaster">
+            <End Role="tblMaritalStatusMaster" EntitySet="tblMaritalStatusMasters" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblStateMaster" Association="Model.FK_tblEmployee_tblStateMaster">
+            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <FunctionImport Name="sp_SearchEmployee" ReturnType="Collection(Model.sp_SearchEmployee_Result)">
+            <Parameter Name="SearchText" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="tblCountryMaster">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblEmployees" Relationship="Model.FK_tblEmployee_tblCountryMaster" FromRole="tblCountryMaster" ToRole="tblEmployee" />
+          <NavigationProperty Name="tblStateMasters" Relationship="Model.FK_tblStateMaster_tblCountryMaster" FromRole="tblCountryMaster" ToRole="tblStateMaster" />
+        </EntityType>
+        <EntityType Name="tblDepartmentMaster">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblEmployees" Relationship="Model.FK_tblEmployee_tblDepartment" FromRole="tblDepartmentMaster" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeptId" Type="Int32" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="MaritalStatusId" Type="Int32" />
+          <Property Name="GenderId" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblCountryMaster" Relationship="Model.FK_tblEmployee_tblCountryMaster" FromRole="tblEmployee" ToRole="tblCountryMaster" />
+          <NavigationProperty Name="tblDepartmentMaster" Relationship="Model.FK_tblEmployee_tblDepartment" FromRole="tblEmployee" ToRole="tblDepartmentMaster" />
+          <NavigationProperty Name="tblGenderMaster" Relationship="Model.FK_tblEmployee_tblGenderMaster" FromRole="tblEmployee" ToRole="tblGenderMaster" />
+          <NavigationProperty Name="tblMaritalStatusMaster" Relationship="Model.FK_tblEmployee_tblMaritalStatusMaster" FromRole="tblEmployee" ToRole="tblMaritalStatusMaster" />
+          <NavigationProperty Name="tblStateMaster" Relationship="Model.FK_tblEmployee_tblStateMaster" FromRole="tblEmployee" ToRole="tblStateMaster" />
+        </EntityType>
+        <EntityType Name="tblGenderMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblEmployees" Relationship="Model.FK_tblEmployee_tblGenderMaster" FromRole="tblGenderMaster" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="tblMaritalStatusMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblEmployees" Relationship="Model.FK_tblEmployee_tblMaritalStatusMaster" FromRole="tblMaritalStatusMaster" ToRole="tblEmployee" />
+        </EntityType>
+        <EntityType Name="tblStateMaster">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" />
+          <NavigationProperty Name="tblCountryMaster" Relationship="Model.FK_tblStateMaster_tblCountryMaster" FromRole="tblStateMaster" ToRole="tblCountryMaster" />
+          <NavigationProperty Name="tblEmployees" Relationship="Model.FK_tblEmployee_tblStateMaster" FromRole="tblStateMaster" ToRole="tblEmployee" />
+        </EntityType>
+        <Association Name="FK_tblEmployee_tblCountryMaster">
+          <End Type="Model.tblCountryMaster" Role="tblCountryMaster" Multiplicity="0..1" />
+          <End Type="Model.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountryMaster">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStateMaster_tblCountryMaster">
+          <End Type="Model.tblCountryMaster" Role="tblCountryMaster" Multiplicity="0..1" />
+          <End Type="Model.tblStateMaster" Role="tblStateMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountryMaster">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblStateMaster">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblDepartment">
+          <End Type="Model.tblDepartmentMaster" Role="tblDepartmentMaster" Multiplicity="0..1" />
+          <End Type="Model.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartmentMaster">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblGenderMaster">
+          <End Type="Model.tblGenderMaster" Role="tblGenderMaster" Multiplicity="0..1" />
+          <End Type="Model.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGenderMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblMaritalStatusMaster">
+          <End Type="Model.tblMaritalStatusMaster" Role="tblMaritalStatusMaster" Multiplicity="0..1" />
+          <End Type="Model.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMaritalStatusMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="MaritalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblStateMaster">
+          <End Type="Model.tblStateMaster" Role="tblStateMaster" Multiplicity="0..1" />
+          <End Type="Model.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStateMaster">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_SearchEmployee_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="EmpCode" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="DeptId" Nullable="true" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="Int32" Name="MaritalStatusId" Nullable="true" />
+          <Property Type="Int32" Name="GenderId" Nullable="true" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Pincode" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="CountryId" Nullable="true" />
+          <Property Type="Int32" Name="StateId" Nullable="true" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EmployeeEntities">
+          <EntitySetMapping Name="tblCountryMasters">
+            <EntityTypeMapping TypeName="Model.tblCountryMaster">
+              <MappingFragment StoreEntitySet="tblCountryMaster">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDepartmentMasters">
+            <EntityTypeMapping TypeName="Model.tblDepartmentMaster">
+              <MappingFragment StoreEntitySet="tblDepartmentMaster">
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="Model.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="MaritalStatusId" ColumnName="MaritalStatusId" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGenderMasters">
+            <EntityTypeMapping TypeName="Model.tblGenderMaster">
+              <MappingFragment StoreEntitySet="tblGenderMaster">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMaritalStatusMasters">
+            <EntityTypeMapping TypeName="Model.tblMaritalStatusMaster">
+              <MappingFragment StoreEntitySet="tblMaritalStatusMaster">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStateMasters">
+            <EntityTypeMapping TypeName="Model.tblStateMaster">
+              <MappingFragment StoreEntitySet="tblStateMaster">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_SearchEmployee" FunctionName="Model.Store.sp_SearchEmployee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_SearchEmployee_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="MaritalStatusId" ColumnName="MaritalStatusId" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace KPITEmployeeProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private EmployeeService _empService;

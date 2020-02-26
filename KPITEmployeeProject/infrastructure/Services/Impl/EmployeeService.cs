@@ -7,15 +7,18 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using KPITEmployeeProject.infrastructure.Services;
+using KPITEmployeeProject.infrastructure.Services.Base;
 
 namespace KPITEmployeeProject.infrastructure.Services.Impl
 {
     public class EmployeeService : IEmployee
     {
+        EmployeeEntities _db = BaseClass.Instance();
         private Repository<tblEmployee> _EmpRepository;
         public EmployeeService()
         {
-            _EmpRepository = new Repository<tblEmployee>(new EmployeeEntities());
+            _EmpRepository = new Repository<tblEmployee>(_db);
         }
         public bool Delete(tblEmployee _empObj)
         {

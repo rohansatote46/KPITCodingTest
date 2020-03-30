@@ -1,5 +1,6 @@
 ﻿using KPITEmployeeProject.infrastructure.Services.Impl;
 using KPITEmployeeProject.Models;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace KPITEmployeeProject.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private EmployeeService _empService;
@@ -146,6 +147,16 @@ namespace KPITEmployeeProject.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public async Task<ActionResult> PrintPDF()
+        {
+            
+            var EmployeeList = _empService.GetAll().OrderByDescending(s => s.CreatedDate).ToList();
+            return new PartialViewAsPdf("_CommonPdfTemp", EmployeeList)
+            {
+                FileName = "Emp_"+Guid.NewGuid()+".pdf"
+            };
         }
     }
 }

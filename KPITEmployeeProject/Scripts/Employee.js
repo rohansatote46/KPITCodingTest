@@ -343,4 +343,15 @@ empApp.controller('EmpController', function ($scope,$http) {
         $("#Pincode").removeClass("is-invalid");
 
     }
+
+    $scope.ExportToPdf = function () {
+        $("#EmpListTableId").tableExport({
+            type: 'pdf',
+            jspdf: {
+                orientation: 'p',
+                margins: { left: 20, top: 10 },
+                autotable: false
+            }
+        });
+    }
 });
